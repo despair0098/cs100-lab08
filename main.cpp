@@ -17,14 +17,14 @@ int main() {
     Base* seven = new Op(7);
     Base* four = new Op(4);
     Base* two = new Op(2);
-    Base* mult = new Mult(seven, four);
-    Base* add = new Add(three, mult);
+    //Base* mult = new Mult(seven, four);
+    Base* add = new Add(three, seven);
     Base* minus = new Sub(add, two);
 
     concreteVisitor* v = new concreteVisitor();
     string latex = v->PrintLateX(minus);
 
     std::cout << minus->stringify() << " = " << minus->evaluate() << std::endl;
-    cout << latex << endl;
+    std::cout << latex << std::endl;
     return 0;
 }
