@@ -1,8 +1,8 @@
-#ifndef CONCRETEVISITOR_HPP
-#define CONCRETEVISITOR_HPP
-
+#ifndef __CONCRETEVISITOR_HPP__
+#define __CONCRETEVISITOR_HPP__
 
 #include "visitor.hpp"
+#include "base.hpp"
 #include "iterator.hpp"
 #include "Mult.hpp"
 #include "Sub.hpp"
@@ -11,8 +11,8 @@
 #include "Pow.hpp"
 #include "op.hpp"
 #include "Rand.hpp"
+#include <string>
 
-using namespace std;
 
 class concreteVisitor : public Visitor {
 
@@ -22,7 +22,8 @@ class concreteVisitor : public Visitor {
     public: 
     concreteVisitor() {};
     ~concreteVisitor() = default;
-    string PrintLateX(Base* ptr){
+
+    std::string PrintLateX(Base* ptr){
         concreteVisitor* visitor = new concreteVisitor();
         Iterator it = Iterator(ptr);
         while(!it.is_done()){
@@ -37,56 +38,58 @@ class concreteVisitor : public Visitor {
 
      // Nodes with no children are visited only once (index = 0)
         virtual void visit_op(Op* node){
-            latex = node->stringify();
+            latex = "{" + node->stringify() + "}";
         };
         virtual void visit_rand(Rand* node){
-            latex = node->stringify();
+            latex = "{" + node->stringify() + "}";
         };
 
-        string getSides(){
-            latex = "$" + latex;
-            latex = latex + "$";
-            return latex;
-        }
+    std::string getSides(){
+        latex = "$" + latex + "$";
+        return latex;
+    }
 
         // Nodes with two children are visited three times.
         // index = 0 -> begin
         // index = 1 -> middle
         // index = 2 -> end
         virtual void visit_add_begin(Add* node){
+            //Base* n1 = node->get_child(0);
+            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_add_middle(Add* node){
-            //Base* n1 = node->get_child(0);
-            //Base* n2 = node->get_child(1);
-            //latex = latex + n1->stringify() + "+" + n2->stringify();
             latex = latex + "+";
         };
         virtual void visit_add_end(Add* node){
+            //Base* n2 = node->get_child(2);
+            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_sub_begin(Sub* node){
+            //Base* n1 = node->get_child(0);
+            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_sub_middle(Sub* node){
-            //Base* n1 = node->get_child(0);
-            //Base* n2 = node->get_child(1);
-            //latex = latex + n1->stringify() + "-" + n2->stringify();
-            latex = latex + "-";  
+            latex = latex + "-";
         };
         virtual void visit_sub_end(Sub* node){
+            //Base* n2 = node->get_child(2);
+            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_mult_begin(Mult* node){
+            //Base* n1 = node->get_child(0);
+            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_mult_middle(Mult* node){
-            //Base* n1 = node->get_child(0);
-            //Base* n2 = node->get_child(1);
-            //latex = latex + n1->stringify() + "\cdot" + n2->stringify();
             latex = latex + "\\cdot\\";
         };
         virtual void visit_mult_end(Mult* node){
+            //Base* n2 = node->get_child(2);
+            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_div_begin(Div* node){
@@ -97,20 +100,21 @@ class concreteVisitor : public Visitor {
             latex = latex + n->stringify();
         };
         virtual void visit_div_end(Div* node){
-            Base* n = node->get_child(1);
+            Base* n = node->get_child(2);
             latex = latex + n->stringify();
         };
         virtual void visit_pow_begin(Pow* node){
+            //Base* n1 = node->get_child(0);
+            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_pow_middle(Pow* node){
-            //Base* n1 = node->get_child(0);
-            //Base* n2 = node->get_child(1);
-            //latex = latex + n1->stringify() + "^" + n2->stringify();
-            latex = latex + "^";
+            latex = latex +"^";
         };
         virtual void visit_pow_end(Pow* node){
-            latex = latex + ")}";
+           // Base* n2 = node->get_child(2);
+           // latex = latex + n2->stringify() + ")}";
+           latex = latex + ")}";
         };
 };
 
