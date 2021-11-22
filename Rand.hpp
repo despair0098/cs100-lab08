@@ -13,7 +13,14 @@ class Rand: public Base{
 	public:
 		Rand() : value(rand() % 100) {}
 		double evaluate(){ return value; }
-		string stringify(){ return "(" + to_string(value) + ")"; }
+		string stringify(){ return "{" + to_string(value) + "}"; }
+		virtual int number_of_children(){return 0;}
+        virtual Base* get_child(int i){
+            return nullptr;
+        }
+        virtual void accept(Visitor* visitor, int index){
+            visitor->visit_rand(this);
+        }
 };
 
 #endif
