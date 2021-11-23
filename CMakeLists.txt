@@ -12,6 +12,8 @@ ADD_EXECUTABLE(test
     Pow.hpp
     concreteVisitor.hpp
     test.cpp
+    iterator.hpp
+    visitor.hpp
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
