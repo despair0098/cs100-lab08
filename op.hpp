@@ -13,7 +13,7 @@ class Op : public Base {
 	Op() : value(0) {}
         Op(double n) : value(n) {}
         virtual double evaluate() { return value; }
-        virtual std::string stringify() { return "{" + to_string(value) + "}"; }
+        virtual std::string stringify() { return to_string(value); }
         virtual int number_of_children(){return 0;}
         virtual Base* get_child(int i){
             return nullptr;

@@ -27,7 +27,7 @@ class Div: public Base{
 			if(right->evaluate() == 0){
 				return "Undefined";
 			}
-			return "(" + left->stringify() + "/" +  right->stringify() + ")";
+			return "(" + left->stringify() + " / " +  right->stringify() + ")";
 		}
 		virtual int number_of_children(){return 2;}
         virtual Base* get_child(int i){
