@@ -6,8 +6,13 @@
 #include "Add.hpp"
 #include "Div.hpp"
 #include "Pow.hpp"
+#include "Rand.hpp"
 #include "concreteVisitor.hpp"
+#include "iterator.hpp"
+#include "iterator.cpp"
+#include "visitor.hpp"
 
+using namespace std;
 TEST(Iterator, Add) {
     Base* three = new Op(3);
     Base* seven = new Op(7);
@@ -18,7 +23,10 @@ TEST(Iterator, Add) {
     Base* minus = new Sub(add, two);
     
     concreteVisitor* v = new concreteVisitor();
-    EXPECT_EQ(mult->stringify(), (7.000000 * 4.000000));
+    string latex = v->PrintLateX(mult);
+    EXPECT_EQ("(7.000000 * 4.000000)", mult->stringify());
+    EXPECT_EQ(28, mult->evaluate());
+    EXPECT_EQ("${({7.000000}\\cdot{4.000000})}$", latex);
 }
 
 TEST(CombinedTests, Combined) {
