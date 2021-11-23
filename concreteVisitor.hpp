@@ -17,7 +17,7 @@
 class concreteVisitor : public Visitor {
 
     private:
-        string latex = "";
+        std::string latex = "";
 
     public: 
     concreteVisitor() {};
@@ -31,17 +31,21 @@ class concreteVisitor : public Visitor {
             it.next();
         }
 
-        string latexFinal = visitor->getSides();
+        std::string latexFinal = visitor->getSides();
         delete visitor;
         return latexFinal;
     }
 
      // Nodes with no children are visited only once (index = 0)
         virtual void visit_op(Op* node){
-            latex = "{" + node->stringify() + "}";
+            latex = latex + "{";
+            latex = latex + node->stringify();
+            latex = latex + "}";
         };
         virtual void visit_rand(Rand* node){
-            latex = "{" + node->stringify() + "}";
+            latex = latex + "{";
+            latex = latex + node->stringify();
+            latex = latex + "}";    
         };
 
     std::string getSides(){
@@ -54,66 +58,48 @@ class concreteVisitor : public Visitor {
         // index = 1 -> middle
         // index = 2 -> end
         virtual void visit_add_begin(Add* node){
-            //Base* n1 = node->get_child(0);
-            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_add_middle(Add* node){
             latex = latex + "+";
         };
         virtual void visit_add_end(Add* node){
-            //Base* n2 = node->get_child(2);
-            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_sub_begin(Sub* node){
-            //Base* n1 = node->get_child(0);
-            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_sub_middle(Sub* node){
             latex = latex + "-";
         };
         virtual void visit_sub_end(Sub* node){
-            //Base* n2 = node->get_child(2);
-            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_mult_begin(Mult* node){
-            //Base* n1 = node->get_child(0);
-            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_mult_middle(Mult* node){
-            latex = latex + "\\cdot\\";
+            latex = latex + "\\cdot";
         };
         virtual void visit_mult_end(Mult* node){
-            //Base* n2 = node->get_child(2);
-            //latex = latex + n2->stringify() + ")}";
             latex = latex + ")}";
         };
         virtual void visit_div_begin(Div* node){
-            latex = latex + "\frac";
+            latex = latex + "{\\frac";
         };
         virtual void visit_div_middle(Div* node){
-            Base* n = node->get_child(0);
-            latex = latex + n->stringify();
+            
         };
         virtual void visit_div_end(Div* node){
-            Base* n = node->get_child(2);
-            latex = latex + n->stringify();
+            latex = latex + "}";
         };
         virtual void visit_pow_begin(Pow* node){
-            //Base* n1 = node->get_child(0);
-            //latex = latex + "{(" + n1->stringify();
             latex = latex + "{(";
         };
         virtual void visit_pow_middle(Pow* node){
             latex = latex +"^";
         };
         virtual void visit_pow_end(Pow* node){
-           // Base* n2 = node->get_child(2);
-           // latex = latex + n2->stringify() + ")}";
            latex = latex + ")}";
         };
 };

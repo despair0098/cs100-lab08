@@ -33,7 +33,7 @@ class Div: public Base{
         virtual Base* get_child(int i){
             if(i == 0){
 				return left;
-			} else if (i == 2){
+			} else if (i == 1){
 				return right;
 			} else {
 				return nullptr;
