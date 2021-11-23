@@ -1,7 +1,7 @@
-#ifndef CONCRETEVISITOR_HPP
-#define CONCRETEVISITOR_HPP
+#ifndef __CONCRETEVISITOR_HPP__
+#define __CONCRETEVISITOR_HPP__
 
-
+#include "base.hpp"
 #include "visitor.hpp"
 #include "iterator.hpp"
 #include "Mult.hpp"
@@ -21,19 +21,21 @@ class concreteVisitor : public Visitor {
 
     public: 
     concreteVisitor() {};
+
     ~concreteVisitor() = default;
+
     string PrintLateX(Base* ptr){
         concreteVisitor* visitor = new concreteVisitor();
-        Iterator it = Iterator(ptr);
-        while(!it.is_done()){
-            it.current_node()->accept(visitor, it.current_index());
-            it.next();
+        Iterator i = Iterator(ptr);
+        while(!i.is_done()){
+            i.current_node()->accept(visitor, i.current_index());
+            i.next();
         }
 
         string latexFinal = visitor->getSides();
         delete visitor;
         return latexFinal;
-    }
+    };
 
      // Nodes with no children are visited only once (index = 0)
         virtual void visit_op(Op* node){
@@ -90,7 +92,7 @@ class concreteVisitor : public Visitor {
             latex = latex + ")}";
         };
         virtual void visit_div_begin(Div* node){
-            latex = latex + "\frac";
+            latex = latex + "\\frac\\";
         };
         virtual void visit_div_middle(Div* node){
             Base* n = node->get_child(0);
