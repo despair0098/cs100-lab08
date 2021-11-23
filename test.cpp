@@ -28,6 +28,21 @@ TEST(Iterator, Add) {
     EXPECT_EQ("${({3.000000}+{2.000000})}$", latex);
 }
 
+TEST(Iterator, NegativeAdd) {
+    Base* three = new Op(3);
+    Base* seven = new Op(7);
+    Base* four = new Op(4);
+    Base* two = new Op(2);
+    Base* negative = new Op(-1);
+    Base* add = new Add(three, negative);
+
+    concreteVisitor* v = new concreteVisitor();
+    string latex = v->PrintLateX(add);
+    EXPECT_EQ("(3.000000 + -1.000000)", add->stringify());
+    EXPECT_EQ(2, add->evaluate());
+    EXPECT_EQ("${({3.000000}+{-1.000000})}$", latex);
+}
+
 TEST(Iterator, Mult) {
     Base* three = new Op(3);
     Base* seven = new Op(7);
